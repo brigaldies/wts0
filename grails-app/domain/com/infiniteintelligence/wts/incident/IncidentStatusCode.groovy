@@ -1,7 +1,6 @@
 package com.infiniteintelligence.wts.incident
 
-class IncidentStatusCode {
+import com.infiniteintelligence.wts.domain.codes.Code
 
-    static constraints = {
-    }
+class IncidentStatusCode extends Code {
 }

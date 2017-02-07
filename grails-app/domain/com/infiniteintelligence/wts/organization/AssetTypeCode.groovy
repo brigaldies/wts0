@@ -1,7 +1,6 @@
 package com.infiniteintelligence.wts.organization
 
-class AssetTypeCode {
+import com.infiniteintelligence.wts.domain.codes.Code
 
-    static constraints = {
-    }
+class AssetTypeCode extends Code {
 }

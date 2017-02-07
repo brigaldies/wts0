@@ -19,6 +19,7 @@ class Principal {
 	}
 
 	static mapping = {
+		table "users"
 		password column: '`password`'
 	}
 

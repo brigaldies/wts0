@@ -4,7 +4,11 @@ class PersonAssetAffiliation {
 
     Person person
     Asset asset
-    PersonAssetAffTypeCode type
+    PersonAssetAffTypeCode affiliationType
+
+    static mapping = {
+        affiliationType column: 'affiliation_type_cd'
+    }
 
     static constraints = {
     }

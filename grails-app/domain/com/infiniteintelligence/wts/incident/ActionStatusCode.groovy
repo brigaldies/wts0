@@ -1,7 +1,6 @@
 package com.infiniteintelligence.wts.incident
 
-class ActionStatusCode {
+import com.infiniteintelligence.wts.domain.codes.Code
 
-    static constraints = {
-    }
+class ActionStatusCode extends Code {
 }

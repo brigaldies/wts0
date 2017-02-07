@@ -30,9 +30,9 @@
 					
 						<g:sortableColumn property="dateEnd" title="${message(code: 'threat.dateEnd.label', default: 'Date End')}" />
 					
-						<th><g:message code="threat.threatSeverityCode.label" default="Threat Severity Code" /></th>
+						<th><g:message code="threat.threatSeverity.label" default="Threat Severity" /></th>
 					
-						<th><g:message code="threat.threatTypeCode.label" default="Threat Type Code" /></th>
+						<th><g:message code="threat.threatType.label" default="Threat Type" /></th>
 					
 					</tr>
 				</thead>
@@ -46,9 +46,9 @@
 					
 						<td><g:formatDate date="${threatInstance.dateEnd}" /></td>
 					
-						<td>${fieldValue(bean: threatInstance, field: "threatSeverityCode")}</td>
+						<td>${fieldValue(bean: threatInstance, field: "threatSeverity")}</td>
 					
-						<td>${fieldValue(bean: threatInstance, field: "threatTypeCode")}</td>
+						<td>${fieldValue(bean: threatInstance, field: "threatType")}</td>
 					
 					</tr>
 				</g:each>

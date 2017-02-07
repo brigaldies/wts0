@@ -2,6 +2,7 @@ package com.infiniteintelligence.wts.incident
 
 import com.infiniteintelligence.wts.security.User
 
+
 class IncidentTeamMember {
 
     Incident incident

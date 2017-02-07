@@ -3,7 +3,11 @@ package com.infiniteintelligence.wts.organization
 class Asset {
 
     Organization organization
-    AssetTypeCode assetTypeCode
+    AssetTypeCode assetType
+
+    static mapping = {
+        assetType column: 'asset_type_cd'
+    }
 
     static constraints = {
     }

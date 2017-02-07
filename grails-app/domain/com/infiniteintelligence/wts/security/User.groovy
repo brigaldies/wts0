@@ -20,6 +20,7 @@ class User extends Principal {
         email blank: false, email: true
         phone nullable: true, blank: false
         report nullable: true
+        organization nullable: true
         dateCreated nullable: true
         lastUpdated nullable: true
     }

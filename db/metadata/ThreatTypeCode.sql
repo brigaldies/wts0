@@ -1,0 +1,1 @@
+insert into THREAT_TYPE_CODE(CODE) VALUES('STORM_HAIL');

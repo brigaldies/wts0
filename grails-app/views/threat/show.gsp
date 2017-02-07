@@ -50,20 +50,20 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${threatInstance?.threatSeverityCode}">
+				<g:if test="${threatInstance?.threatSeverity}">
 				<li class="fieldcontain">
-					<span id="threatSeverityCode-label" class="property-label"><g:message code="threat.threatSeverityCode.label" default="Threat Severity Code" /></span>
+					<span id="threatSeverity-label" class="property-label"><g:message code="threat.threatSeverity.label" default="Threat Severity" /></span>
 					
-						<span class="property-value" aria-labelledby="threatSeverityCode-label"><g:link controller="threatSeverityCode" action="show" id="${threatInstance?.threatSeverityCode?.id}">${threatInstance?.threatSeverityCode?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="threatSeverity-label"><g:link controller="threatSeverityCode" action="show" id="${threatInstance?.threatSeverity?.id}">${threatInstance?.threatSeverity?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>
 			
-				<g:if test="${threatInstance?.threatTypeCode}">
+				<g:if test="${threatInstance?.threatType}">
 				<li class="fieldcontain">
-					<span id="threatTypeCode-label" class="property-label"><g:message code="threat.threatTypeCode.label" default="Threat Type Code" /></span>
+					<span id="threatType-label" class="property-label"><g:message code="threat.threatType.label" default="Threat Type" /></span>
 					
-						<span class="property-value" aria-labelledby="threatTypeCode-label"><g:link controller="threatTypeCode" action="show" id="${threatInstance?.threatTypeCode?.id}">${threatInstance?.threatTypeCode?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="threatType-label"><g:link controller="threatTypeCode" action="show" id="${threatInstance?.threatType?.id}">${threatInstance?.threatType?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>

@@ -6,8 +6,12 @@ class Action {
 
     Incident incident
     Integer stepNumber
-    ActionStatusCode actionStatusCode
-    User assigned
+    ActionStatusCode status
+    User assignedUser
+
+    static mapping = {
+        status column: 'status_cd'
+    }
 
     static constraints = {
     }

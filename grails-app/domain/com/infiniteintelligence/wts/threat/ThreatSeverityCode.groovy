@@ -1,7 +1,6 @@
 package com.infiniteintelligence.wts.threat
 
-class ThreatSeverityCode {
+import com.infiniteintelligence.wts.domain.codes.Code
 
-    static constraints = {
-    }
+class ThreatSeverityCode extends Code {
 }

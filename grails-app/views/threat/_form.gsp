@@ -20,21 +20,21 @@
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: threatInstance, field: 'threatSeverityCode', 'error')} required">
-	<label for="threatSeverityCode">
-		<g:message code="threat.threatSeverityCode.label" default="Threat Severity Code" />
+<div class="fieldcontain ${hasErrors(bean: threatInstance, field: 'threatSeverity', 'error')} required">
+	<label for="threatSeverity">
+		<g:message code="threat.threatSeverity.label" default="Threat Severity" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="threatSeverityCode" name="threatSeverityCode.id" from="${com.infiniteintelligence.wts.threat.ThreatSeverityCode.list()}" optionKey="id" required="" value="${threatInstance?.threatSeverityCode?.id}" class="many-to-one"/>
+	<g:select id="threatSeverity" name="threatSeverity.id" from="${com.infiniteintelligence.wts.threat.ThreatSeverityCode.list()}" optionKey="code" required="" value="${threatInstance?.threatSeverity?.code}" class="many-to-one"/>
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: threatInstance, field: 'threatTypeCode', 'error')} required">
-	<label for="threatTypeCode">
-		<g:message code="threat.threatTypeCode.label" default="Threat Type Code" />
+<div class="fieldcontain ${hasErrors(bean: threatInstance, field: 'threatType', 'error')} required">
+	<label for="threatType">
+		<g:message code="threat.threatType.label" default="Threat Type" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="threatTypeCode" name="threatTypeCode.id" from="${com.infiniteintelligence.wts.threat.ThreatTypeCode.list()}" optionKey="id" required="" value="${threatInstance?.threatTypeCode?.id}" class="many-to-one"/>
+	<g:select id="threatType" name="threatType.id" from="${com.infiniteintelligence.wts.threat.ThreatTypeCode.list()}" optionKey="code" required="" value="${threatInstance?.threatType?.code}" class="many-to-one"/>
 
 </div>
 

@@ -9,7 +9,7 @@
 
     drop table asset cascade constraints;
 
-    drop table asset_type cascade constraints;
+    drop table asset_type_code cascade constraints;
 
     drop table incident cascade constraints;
 
@@ -29,8 +29,6 @@
 
     drop table person_asset_affiliation cascade constraints;
 
-    drop table principal cascade constraints;
-
     drop table principal_role cascade constraints;
 
     drop table role cascade constraints;
@@ -41,22 +39,23 @@
 
     drop table threat_type_code cascade constraints;
 
+    drop table users cascade constraints;
+
     drop sequence hibernate_sequence;
 
     create table action (
         id number(19,0) not null,
         version number(19,0) not null,
-        action_status_code_id number(19,0) not null,
-        assigned_id number(19,0) not null,
+        assigned_user_id number(19,0) not null,
         incident_id number(19,0) not null,
+        status_cd varchar2(255 char) not null,
         step_number number(10,0) not null,
         primary key (id)
     );
 
     create table action_status_code (
-        id number(19,0) not null,
-        version number(19,0) not null,
-        primary key (id)
+        code varchar2(255 char) not null,
+        primary key (code)
     );
 
     create table activity (
@@ -75,14 +74,14 @@
     create table asset (
         id number(19,0) not null,
         version number(19,0) not null,
+        asset_type_cd varchar2(255 char) not null,
         organization_id number(19,0) not null,
         primary key (id)
     );
 
-    create table asset_type (
-        id number(19,0) not null,
-        version number(19,0) not null,
-        primary key (id)
+    create table asset_type_code (
+        code varchar2(255 char) not null,
+        primary key (code)
     );
 
     create table incident (
@@ -90,9 +89,9 @@
         version number(19,0) not null,
         asset_id number(19,0) not null,
         date_created timestamp not null,
-        incident_status_code_id number(19,0) not null,
         last_updated timestamp not null,
         lead_id number(19,0) not null,
+        status_cd varchar2(255 char) not null,
         threat_id number(19,0) not null,
         primary key (id)
     );
@@ -102,14 +101,13 @@
         version number(19,0) not null,
         date_created timestamp not null,
         incident_id number(19,0) not null,
-        incident_status_code_id number(19,0) not null,
+        status_cd varchar2(255 char) not null,
         primary key (id)
     );
 
     create table incident_status_code (
-        id number(19,0) not null,
-        version number(19,0) not null,
-        primary key (id)
+        code varchar2(255 char) not null,
+        primary key (code)
     );
 
     create table incident_team_member (
@@ -141,38 +139,16 @@
     );
 
     create table person_asset_aff_type_code (
-        id number(19,0) not null,
-        version number(19,0) not null,
-        primary key (id)
+        code varchar2(255 char) not null,
+        primary key (code)
     );
 
     create table person_asset_affiliation (
         id number(19,0) not null,
         version number(19,0) not null,
+        affiliation_type_cd varchar2(255 char) not null,
         asset_id number(19,0) not null,
         person_id number(19,0) not null,
-        type_id number(19,0) not null,
-        primary key (id)
-    );
-
-    create table principal (
-        id number(19,0) not null,
-        version number(19,0) not null,
-        account_expired number(1,0) not null,
-        account_locked number(1,0) not null,
-        enabled number(1,0) not null,
-        "password" varchar2(255 char) not null,
-        password_expired number(1,0) not null,
-        username varchar2(255 char) not null,
-        class varchar2(255 char) not null,
-        date_created timestamp,
-        email varchar2(255 char),
-        first_name varchar2(255 char),
-        last_name varchar2(255 char),
-        last_updated timestamp,
-        organization_id number(19,0),
-        phone varchar2(255 char),
-        report_id number(19,0),
         primary key (id)
     );
 
@@ -195,48 +171,72 @@
         date_begin timestamp not null,
         date_created timestamp not null,
         date_end timestamp not null,
-        threat_severity_code_id number(19,0) not null,
-        threat_type_code_id number(19,0) not null,
+        threat_severity_cd varchar2(255 char) not null,
+        threat_type_cd varchar2(255 char) not null,
         primary key (id)
     );
 
     create table threat_severity_code (
-        id number(19,0) not null,
-        version number(19,0) not null,
-        primary key (id)
+        code varchar2(255 char) not null,
+        primary key (code)
     );
 
     create table threat_type_code (
-        id number(19,0) not null,
-        version number(19,0) not null,
-        primary key (id)
+        code varchar2(255 char) not null,
+        primary key (code)
     );
 
-    alter table principal 
-        add constraint UK_rsjolrak8rcat0953ac4eiab5  unique (username);
+    create table users (
+        id number(19,0) not null,
+        version number(19,0) not null,
+        account_expired number(1,0) not null,
+        account_locked number(1,0) not null,
+        enabled number(1,0) not null,
+        "password" varchar2(255 char) not null,
+        password_expired number(1,0) not null,
+        username varchar2(255 char) not null,
+        class varchar2(255 char) not null,
+        date_created timestamp,
+        email varchar2(255 char),
+        first_name varchar2(255 char),
+        last_name varchar2(255 char),
+        last_updated timestamp,
+        organization_id number(19,0),
+        phone varchar2(255 char),
+        report_id number(19,0),
+        primary key (id)
+    );
 
     alter table role 
         add constraint UK_irsamgnera6angm0prq1kemt2  unique (authority);
 
-    alter table action 
-        add constraint FK_q118qpgulu7v1fplw4ulw3v6h 
-        foreign key (action_status_code_id) 
-        references action_status_code;
+    alter table users 
+        add constraint UK_r43af9ap4edm43mmtq01oddj6  unique (username);
 
     alter table action 
-        add constraint FK_qfqhtbmk89lqxt15bojr1xvcv 
-        foreign key (assigned_id) 
-        references principal;
+        add constraint FK_9ng2eg9bc2mrp3r1j8m6ono7m 
+        foreign key (assigned_user_id) 
+        references users;
 
     alter table action 
         add constraint FK_if6t47wj4va8yt9rkgewq8hq3 
         foreign key (incident_id) 
         references incident;
 
+    alter table action 
+        add constraint FK_qv6gjqugq0879c3wv80e4eko4 
+        foreign key (status_cd) 
+        references action_status_code;
+
     alter table activity 
         add constraint FK_71whvshwnbmpcvmb63iyxi63i 
         foreign key (activity_type_code_id) 
         references activity_type_code;
+
+    alter table asset 
+        add constraint FK_ntw74wig53rlyqf1fq2schx6d 
+        foreign key (asset_type_cd) 
+        references asset_type_code;
 
     alter table asset 
         add constraint FK_lec5tqsfdjffip8xtnkec7q4h 
@@ -249,14 +249,14 @@
         references asset;
 
     alter table incident 
-        add constraint FK_4ylj362aqc6kmwhdoendhx5xb 
-        foreign key (incident_status_code_id) 
-        references incident_status_code;
-
-    alter table incident 
         add constraint FK_536kj022cy6f755krmf9ldtjn 
         foreign key (lead_id) 
-        references principal;
+        references users;
+
+    alter table incident 
+        add constraint FK_thwwxuh9rmo4p2s2w9d993uub 
+        foreign key (status_cd) 
+        references incident_status_code;
 
     alter table incident 
         add constraint FK_s0wbgu5wm7w2txaradjngj357 
@@ -269,8 +269,8 @@
         references incident;
 
     alter table incident_status_audit 
-        add constraint FK_5m0y9o86lfserxlyy2k9t6y9g 
-        foreign key (incident_status_code_id) 
+        add constraint FK_epc40m6h7pvqh6ktvtry30mif 
+        foreign key (status_cd) 
         references incident_status_code;
 
     alter table incident_team_member 
@@ -281,7 +281,7 @@
     alter table incident_team_member 
         add constraint FK_15q302x06dghncjpj8p2i0k2q 
         foreign key (user_id) 
-        references principal;
+        references users;
 
     alter table media 
         add constraint FK_mk6lcbj8x44138oeomx6ke4l9 
@@ -294,6 +294,11 @@
         references organization;
 
     alter table person_asset_affiliation 
+        add constraint FK_jxmsrk3tavog27u86bltvrewa 
+        foreign key (affiliation_type_cd) 
+        references person_asset_aff_type_code;
+
+    alter table person_asset_affiliation 
         add constraint FK_px30314pmibmi9w59abjc7nan 
         foreign key (asset_id) 
         references asset;
@@ -303,21 +308,6 @@
         foreign key (person_id) 
         references person;
 
-    alter table person_asset_affiliation 
-        add constraint FK_5bm9wbxnnl2i1aupoh3g161ef 
-        foreign key (type_id) 
-        references person_asset_aff_type_code;
-
-    alter table principal 
-        add constraint FK_ki5xe8q7jyitqbfua5ymxsrif 
-        foreign key (organization_id) 
-        references organization;
-
-    alter table principal 
-        add constraint FK_3g7k8wflmk7e0wlaqjce0s5rk 
-        foreign key (report_id) 
-        references principal;
-
     alter table principal_role 
         add constraint FK_5xh09uyijeuevdjh1ix7c4cbo 
         foreign key (role_id) 
@@ -326,16 +316,26 @@
     alter table principal_role 
         add constraint FK_iggr91r57axokvewewthsmo6c 
         foreign key (principal_id) 
-        references principal;
+        references users;
 
     alter table threat 
-        add constraint FK_n764p1l91jahkllyn1weokpui 
-        foreign key (threat_severity_code_id) 
+        add constraint FK_8uf4gbyj0qgj9dd4jw4gt66q 
+        foreign key (threat_severity_cd) 
         references threat_severity_code;
 
     alter table threat 
-        add constraint FK_jw4kugjhobuhc352xugt2dpt1 
-        foreign key (threat_type_code_id) 
+        add constraint FK_6atvfwm93du9umc219d3xydn1 
+        foreign key (threat_type_cd) 
         references threat_type_code;
+
+    alter table users 
+        add constraint FK_1dg427qt898j7shqnvv5s617p 
+        foreign key (organization_id) 
+        references organization;
+
+    alter table users 
+        add constraint FK_3jekdk0twsc76ryx3okbax9qn 
+        foreign key (report_id) 
+        references users;
 
     create sequence hibernate_sequence;
